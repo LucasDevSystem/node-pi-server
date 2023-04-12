@@ -143,14 +143,14 @@
 
 
       function run() {
-        setInterval(updateSystemInfo, 2000);
+        setInterval(updateSystemInfo, 1000);
       }
 
       async function updateSystemInfo() {
         let response = await fetch("api/systeminfo");
         const systemInfo = await response.json();
 
-        const ram = systemInfo.system.memFree / systemInfo.system.memTotal * 100;
+        const ram = (systemInfo.system.memTotal - systemInfo.system.memFree) / systemInfo.system.memTotal * 100;
         const storage = systemInfo.storage.used / (systemInfo.storage.used + systemInfo.storage.avaliable) * 100;
         const cpu = systemInfo.system.cpu;
 
