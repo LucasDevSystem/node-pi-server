@@ -8,6 +8,7 @@ const MEMORY_TOTAL =
   "egrep --color 'MemTotal' /proc/meminfo | egrep '[0-9.]{4,}' -o";
 const CURR_TEMP = "cat /sys/class/thermal/thermal_zone0/temp";
 const STORAGE = "df -h";
+const CPU = "top -d 0.5 -b -n2 | grep 'Cpu(s)'|tail -n 1 | awk '{print $2 + $4}'";
 
 /**
  *  get used and avaliable storage
@@ -38,6 +39,7 @@ async function getSystemStatus(): Promise<{
   temp: number;
   memFree: number;
   memTotal: number;
+  cpu: number;
 }> {
   let memFree = await execCommand(MEMORY_FREE);
   memFree = parseInt(memFree) / 1000;
@@ -48,10 +50,14 @@ async function getSystemStatus(): Promise<{
   let temp = await execCommand(CURR_TEMP);
   temp = parseFloat(temp) / 1000;
 
+  let cpu = await execCommand(CPU);
+  cpu = parseFloat(cpu);
+
   return {
     temp,
     memFree,
     memTotal,
+    cpu
   };
 }
 
