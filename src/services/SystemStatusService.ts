@@ -3,7 +3,7 @@ const exec = util.promisify(require("child_process").exec);
 
 // Raspberry OS commands
 const MEMORY_FREE =
-  "egrep --color 'MemFree' /proc/meminfo | egrep '[0-9.]{4,}' -o";
+  "egrep --color 'MemAvailable' /proc/meminfo | egrep '[0-9.]{4,}' -o";
 const MEMORY_TOTAL =
   "egrep --color 'MemTotal' /proc/meminfo | egrep '[0-9.]{4,}' -o";
 const CURR_TEMP = "cat /sys/class/thermal/thermal_zone0/temp";
