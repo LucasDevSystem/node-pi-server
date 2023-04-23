@@ -115,7 +115,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Player</h5>
             <button
               type="button"
               class="close"
@@ -126,17 +126,49 @@
             </button>
           </div>
           <div class="modal-body">
-            <form
-              id="my-form"
-              method="POST"
-              action="api/upload"
-              enctype="multipart/form-data"
-            >
-              <input type="file" name="image" />
-              <button type="submit">Upload</button>
-            </form>
+            <div class="container text-center">
+              <div class="row">
+                <div class="col">
+                  <svg
+                    onclick="onSelect()"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="60"
+                    height="60"
+                    fill="currentColor"
+                    class="bi bi-play-btn"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"
+                    />
+                    <path
+                      d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
+                    />
+                  </svg>
+                </div>
+
+                <div class="col">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="60"
+                    height="60"
+                    onclick="onPause()"
+                    fill="currentColor"
+                    class="bi bi-pause-btn"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.25 5C5.56 5 5 5.56 5 6.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C7.5 5.56 6.94 5 6.25 5zm3.5 0c-.69 0-1.25.56-1.25 1.25v3.5a1.25 1.25 0 1 0 2.5 0v-3.5C11 5.56 10.44 5 9.75 5z"
+                    />
+                    <path
+                      d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="modal-footer">
+          <!-- <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
@@ -145,7 +177,7 @@
               Close
             </button>
             <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -168,6 +200,15 @@
             title="Play Trailer"
           >
           </i>
+          <button
+            style="color: #27b4a4; border-color: #27b4a4; font-size: 18px"
+            type="button"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            class="btn btn-outline-secondary"
+          >
+            Play
+          </button>
           <h5 class="card-title">Azulzinho e Ze da Frecha</h5>
           <span class="movie_info">2023</span>
           <span class="movie_info float-right"
@@ -178,14 +219,16 @@
     </div>
 
     <script type="text/javascript">
+      addEventListeners();
+
       async function onSelect() {
         const data = {
           movieId: 1,
           type: "PLAY",
           device: "HDMI",
-          command: "add",
+          command: "add Avatar7.1.mkv\n",
         };
-        
+
         await fetch("api/mediaplayer", {
           method: "POST",
           headers: {
@@ -196,6 +239,47 @@
 
         // const result = await response.json();
         // console.log(result);
+      }
+
+      async function onPause() {
+        console.log('pause')
+        const data = {
+          movieId: 1,
+          type: "PLAY",
+          device: "HDMI",
+          command: "pause\n",
+        };
+
+        await fetch("api/mediaplayer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        // const result = await response.json();
+        // console.log(result);
+      }
+
+      function addEventListeners() {
+        //                     MODAL
+        const button = document.querySelector('[data-toggle="modal"]');
+        const modal = document.querySelector("#exampleModal");
+        const closeButton = modal.querySelector('[data-dismiss="modal"]');
+
+        // open modal listener
+        button.addEventListener("click", () => {
+          modal.classList.add("show");
+          modal.style.display = "block";
+          document.body.classList.add("modal-open");
+        });
+        // close modal listener
+        closeButton.addEventListener("click", () => {
+          modal.classList.remove("show");
+          modal.style.display = "none";
+          document.body.classList.remove("modal-open");
+        });
       }
     </script>
   </body>
