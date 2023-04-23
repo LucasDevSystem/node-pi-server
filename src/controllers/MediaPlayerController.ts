@@ -8,6 +8,9 @@ const post = async (req: Request, res: Response) => {
 
     //start media
     const vlc = VlcSingleton.getInstance();
+
+    console.log(vlc.isServiceStarted());
+
     vlc.write(commandData.command);
 
     return res.sendStatus(200);

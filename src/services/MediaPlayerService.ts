@@ -3,18 +3,26 @@ import { spawn, ChildProcess } from "child_process";
 class VlcSingleton {
   private static instance: VlcSingleton;
   private vlc: ChildProcess;
-  private isMediaStarted = false;
+  private isStarted = false;
 
   private constructor() {
-    this.vlc = spawn("vlc");
+    this.vlc = this.start();
+    this.isStarted = true;
+  }
 
-    this.vlc?.stdout?.on("data", (data) => {
+  private start() {
+    let vlc = spawn("vlc");
+
+    vlc?.stdout?.on("data", (data) => {
       console.log(`Saída do VLC: ${data}`);
     });
 
-    this.vlc.on("close", (code) => {
+    vlc.on("close", (code) => {
       console.log(`child process exited with code ${code}`);
+      this.isStarted = false;
     });
+
+    return vlc;
   }
 
   static getInstance(): VlcSingleton {
@@ -23,9 +31,9 @@ class VlcSingleton {
     }
     return VlcSingleton.instance;
   }
-  
-  isPlayingMedia() {
-    return this.isMediaStarted;
+
+  isServiceStarted(): boolean {
+    return this.isStarted;
   }
 
   write(command: string) {
