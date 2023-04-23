@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 const systemInfo = require("./controllers/SystemStatusController");
 const images = require("./controllers/ImageController");
 const uploadImageMiddleware = require("./middlewares/UploadImageMiddleware");
+const mediaplayer = require("./controllers/MediaPlayerController");
 
 const express = require("express");
 const routes = express.Router();
@@ -14,6 +15,10 @@ routes.get("/", function (req: Request, res: Response) {
 
 routes.get("/images", function (req: Request, res: Response) {
   res.sendFile(__dirname + "/view/images/index.html");
+});
+
+routes.get("/mediaplayer", function (req: Request, res: Response) {
+  res.sendFile(__dirname + "/view/mediaplayer/index.html");
 });
 
 // BACKEND
@@ -30,5 +35,6 @@ routes.post(
     res.json(req.file.filename);
   }
 );
+routes.post("/api/mediaplayer", mediaplayer.post);
 
 export { routes };

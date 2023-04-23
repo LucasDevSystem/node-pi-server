@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+        -webkit-user-select: none;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        user-select: none;
+      }
+      img {
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+      }
+      img {
+        pointer-events: none;
+      }
+      .movie_card {
+        padding: 0 !important;
+        width: 22rem;
+        margin: 14px;
+        border-radius: 10px;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2),
+          0 4px 15px 0 rgba(0, 0, 0, 0.19);
+      }
+      .movie_card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 33rem;
+      }
+      .movie_info {
+        color: #5e5c5c;
+      }
+
+      .movie_info i {
+        font-size: 20px;
+      }
+      .card-title {
+        width: 80%;
+        height: 4rem;
+      }
+      .play_button {
+        background-color: #ff3d49;
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        right: 20px;
+        bottom: 111px;
+        font-size: 27px;
+        padding-left: 21px;
+        padding-top: 16px;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .credits {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        border: 2px solid #8e24aa;
+        font-size: 18px;
+      }
+      .credits .card-body {
+        padding: 0;
+      }
+      .credits p {
+        padding-top: 15px;
+        padding-left: 18px;
+      }
+      .credits .card-body i {
+        color: #8e24aa;
+      }
+    </style>
+    <title>Media Player</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand">Media Player</a>
+      <!-- <div class="d-flex justify-content-end">
+        <button
+          style="color: #27b4a4; border-color: #27b4a4; font-size: 18px"
+          type="button"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          class="btn btn-outline-secondary"
+        >
+          Upload
+        </button>
+      </div> -->
+    </nav>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="my-form"
+              method="POST"
+              action="api/upload"
+              enctype="multipart/form-data"
+            >
+              <input type="file" name="image" />
+              <button type="submit">Upload</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- <div id="#gallery" class="row text-center text-lg-start"></div> -->
+
+      <div class="card movie_card">
+        <img
+          src="https://lumiere-a.akamaihd.net/v1/images/poster_avatar_2_el_camino_del_agua_1d2e37ee.jpeg?region=0,0,752,1080"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <i
+            class="fas fa-play play_button"
+            data-toggle="tooltip"
+            onclick="onSelect()"
+            data-placement="bottom"
+            title="Play Trailer"
+          >
+          </i>
+          <h5 class="card-title">Azulzinho e Ze da Frecha</h5>
+          <span class="movie_info">2023</span>
+          <span class="movie_info float-right"
+            ><i class="fas fa-star"></i> 9 / 10</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      async function onSelect() {
+        console.log('aa')
+        const data = {
+          movieId: 1,
+          type: "PLAY",
+          device: "HDMI",
+        };
+
+        await fetch("api/mediaplayer", {
+          method: "POST",
+          body: data,
+        });
+
+        // const result = await response.json();
+        // console.log(result);
+      }
+    </script>
+  </body>
+</html>
