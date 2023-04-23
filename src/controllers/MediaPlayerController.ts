@@ -3,9 +3,12 @@ const { VlcSingleton } = require("../services/MediaPlayerService");
 
 const post = async (req: Request, res: Response) => {
   try {
+    const commandData = req.body;
+    console.log(commandData.command);
+
     //start media
     const vlc = VlcSingleton.getInstance();
-    vlc.write("add Avatar7.1.mkv\n");
+    vlc.write(commandData.command);
 
     return res.sendStatus(200);
   } catch (error) {

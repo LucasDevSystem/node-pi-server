@@ -179,16 +179,19 @@
 
     <script type="text/javascript">
       async function onSelect() {
-        console.log('aa')
         const data = {
           movieId: 1,
           type: "PLAY",
           device: "HDMI",
+          command: "add",
         };
-
+        
         await fetch("api/mediaplayer", {
           method: "POST",
-          body: data,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         });
 
         // const result = await response.json();
