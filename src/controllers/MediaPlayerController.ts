@@ -9,6 +9,10 @@ const post = async (req: Request, res: Response) => {
     //start media
     const vlc = VlcSingleton.getInstance();
 
+    if (!vlc.isServiceStarted()) {
+      vlc.start();
+    }
+    
     console.log(vlc.isServiceStarted());
 
     vlc.sendCommand(commandData.command);

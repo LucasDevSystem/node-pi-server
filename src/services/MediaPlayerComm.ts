@@ -2,18 +2,23 @@ const { VlcSingleton } = require("./MediaPlayerService");
 
 /**
  * mediaplayer socket communication
- * when a client trigger an action alll clients will receive
+ * all clients will  be updated with same events
  * @param socket
  * @param io
  */
 const mediaPlayerComm = (socket: any, io: any) => {
   try {
-    // curr media stt
-    let currentStatus = {
-      elapsedTime: 20,
-      title: "avatar",
+    let mediaPlayer = {
+      currentTime: 0,
+      title: "",
+      id: undefined,
     };
+
     const vlc = VlcSingleton.getInstance();
+    
+    if(!vlc.isServiceStarted()){
+      vlc.start();
+    }
     // send to all clients diconnection
     vlc.disconnectionCb = () => io.emit("disconnection", "VLC_DISCONNECTED");
 
@@ -27,10 +32,9 @@ const mediaPlayerComm = (socket: any, io: any) => {
       console.log("user disconnected");
     });
   } catch (error) {
-    console.log('disconnected')
+    console.log("disconnected");
     console.log(error);
   }
 };
 
 module.exports = { mediaPlayerComm };
-

@@ -72,14 +72,14 @@ class VlcSingleton {
   private static instance: VlcSingleton;
   private vlc: ChildProcess;
   private isStarted = false;
-  error:boolean = false;
+  error: boolean = false;
   public disconnectionCb?: { (): void };
 
   private constructor() {
     this.vlc = this.start();
   }
 
-  private start() {
+  start() {
     let vlc: ChildProcess = spawn("vlc");
     this.isStarted = true;
 
@@ -93,7 +93,7 @@ class VlcSingleton {
       this.disconnectionCb?.();
     });
 
-    vlc.on("error", function (err:any) {
+    vlc.on("error", function (err: any) {
       console.log(err);
     });
 
