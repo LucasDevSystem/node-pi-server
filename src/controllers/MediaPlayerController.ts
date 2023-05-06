@@ -11,7 +11,7 @@ const post = async (req: Request, res: Response) => {
 
     console.log(vlc.isServiceStarted());
 
-    vlc.write(commandData.command);
+    vlc.sendCommand(commandData.command);
 
     return res.sendStatus(200);
   } catch (error) {
