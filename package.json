@@ -26,6 +26,11 @@
     "@types/node": "^18.15.0",
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
-    "ts-node-dev": "^2.0.0"
+    "socket.io": "^4.6.1",
+    "ts-node-dev": "^2.0.0",
+    "vlc-player": "^2.0.0",
+    "vlc-simple-player": "^0.5.1",
+    "vlcplayer-node": "^0.5.3",
+    "xterm": "^5.1.0"
   }
 }
