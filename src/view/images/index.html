@@ -146,6 +146,7 @@
             let response = await fetch("api/upload", {
               method: "POST",
               body: formData,
+              timeout: 1200 // 20 minutes
             });
             const result = await response.json();
 
