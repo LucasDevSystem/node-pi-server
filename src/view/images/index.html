@@ -41,7 +41,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> Upload</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Upload</h5>
             <button
               type="button"
               class="close"
@@ -87,7 +87,7 @@
       async function loadImages() {
         let response = await fetch("api/images");
         const imgs = await response.json();
-        
+
         imgs.forEach((img) => {
           addImg(img);
         });
@@ -142,13 +142,19 @@
           event.preventDefault();
 
           const formData = new FormData(form);
-          let response = await fetch("api/upload", {
-            method: "POST",
-            body: formData,
-          });
-          const result = await response.json();
+          try {
+            let response = await fetch("api/upload", {
+              method: "POST",
+              body: formData,
+            });
+            const result = await response.json();
 
-          addImg(result);
+            window.alert("Sucessfull Sent");
+            addImg(result);
+          } catch (error) {
+            console.log(error);
+            window.alert("Error: Can't send Image")
+          }
         });
       }
     </script>
